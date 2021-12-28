@@ -1,5 +1,5 @@
 import unittest
-from browser import create_browser, login, sleep, APP_URL
+from browser import create_browser, login, sleep
 from util import random_word
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys

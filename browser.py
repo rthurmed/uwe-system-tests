@@ -5,10 +5,8 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 
 CHROME_DRIVER_PATH = '/home/arthur/Projects/tcc/uwe-system-tests/drivers/chromedriver-96'
-APP_URL = 'http://localhost:3000'
-APP_USER = 'test'
-APP_PASS = 'test'
-homepage_url = APP_URL
+homepage_url = 'http://localhost:3000'
+account_url = 'http://localhost:3000/account'
 
 
 def create_browser():
@@ -21,16 +19,22 @@ def create_browser():
     return driver
 
 
-def login(browser):
-    browser.get(APP_URL)
+def login(browser, user='test', passw='test'):
+    browser.get(homepage_url)
 
     login_username = browser.find_element(By.ID, 'username')
     login_password = browser.find_element(By.ID, 'password')
     login_button = browser.find_element(By.ID, 'kc-login')
 
-    login_username.send_keys(APP_USER)
-    login_password.send_keys(APP_PASS)
+    login_username.send_keys(user)
+    login_password.send_keys(passw)
     login_button.click()
+
+
+def logout(browser):
+    browser.get(account_url)
+    click_element(browser, value='logout')
+    sleep(2)
 
 
 def click_element(browser, by=By.ID, value=''):
