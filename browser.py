@@ -30,3 +30,14 @@ def login(browser):
     login_username.send_keys(APP_USER)
     login_password.send_keys(APP_PASS)
     login_button.click()
+
+
+def click_element(browser, by=By.ID, value=''):
+    element = browser.find_element(by, value)
+    element.click()
+    return element
+
+
+def count_elements(browser, by=By.CLASS_NAME, value=''):
+    elements = browser.find_elements(by, value)
+    return len(elements)
