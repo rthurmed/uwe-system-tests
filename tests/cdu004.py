@@ -44,7 +44,7 @@ class CdU004TestCase(unittest.TestCase):
         click_element(self.browser, value='create-invite-submit')
         sleep(3)
 
-    # CdU008 also?
+    # CdU005 also?
     def test_should_invite_member(self):
         # arrange
         members_count = count_elements(self.browser, By.CLASS_NAME, 'members-list-item')
