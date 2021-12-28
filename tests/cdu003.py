@@ -1,5 +1,5 @@
 import unittest
-from browser import create_browser, login, sleep, APP_URL
+from browser import create_browser, login, sleep, click_element, count_elements
 from util import random_word
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -26,11 +26,13 @@ class CdU003TestCase(unittest.TestCase):
         input_submit.click()
         sleep(3)
 
-    def test_should_create_and_remove_diagram(self):
-        # CREATE
-        diagram_count_1 = len(self.browser.find_elements(By.CLASS_NAME, "diagram-list-item"))
-        self.assertEqual(diagram_count_1, 0)
+    def tearDown(self) -> None:
+        click_element(self.browser, By.XPATH, "//span[@class='avatar-card-label font-weight-bold']")
+        sleep(1)
+        click_element(self.browser, By.ID, "update-project-remove")
+        sleep(3)
 
+    def create_diagram(self):
         diagram_menu_button = self.browser.find_element(By.ID, "create-diagram-button")
         diagram_menu_button.click()
         sleep(1)
@@ -39,10 +41,29 @@ class CdU003TestCase(unittest.TestCase):
         use_case_diagram_option.click()
         sleep(3)
 
+    def test_should_create_diagram(self):
+        # arrange
+        diagram_count_1 = len(self.browser.find_elements(By.CLASS_NAME, "diagram-list-item"))
+        self.assertEqual(diagram_count_1, 0)
+
+        # act
+        diagram_menu_button = self.browser.find_element(By.ID, "create-diagram-button")
+        diagram_menu_button.click()
+        sleep(1)
+
+        use_case_diagram_option = self.browser.find_element(By.ID, "create-diagram-option-0")
+        use_case_diagram_option.click()
+        sleep(3)
+
+        # assert
         diagram_count_2 = len(self.browser.find_elements(By.CLASS_NAME, "diagram-list-item"))
         self.assertEqual(diagram_count_2, 1)
 
-        # DELETE
+    def test_should_remove_diagram(self):
+        # arrange
+        self.create_diagram()
+
+        # act
         menus = self.browser.find_elements(By.CLASS_NAME, "diagram-menu")
         diagram_menu = menus[0]
         diagram_menu.click()
@@ -53,6 +74,7 @@ class CdU003TestCase(unittest.TestCase):
         remove_option.click()
         sleep(3)
 
+        # assert
         diagram_count_3 = len(self.browser.find_elements(By.CLASS_NAME, "diagram-list-item"))
         self.assertEqual(diagram_count_3, 0)
 
