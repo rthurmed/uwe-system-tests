@@ -8,6 +8,7 @@ CHROME_DRIVER_PATH = '/home/arthur/Projects/tcc/uwe-system-tests/drivers/chromed
 APP_URL = 'http://localhost:3000'
 APP_USER = 'test'
 APP_PASS = 'test'
+homepage_url = APP_URL
 
 
 def create_browser():
